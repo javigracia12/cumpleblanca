@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { supabase } from './lib/supabase'
 
 function App() {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [formData, setFormData] = useState({
     nombre: '',
     asiste: '',
@@ -13,11 +16,25 @@ function App() {
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    setError(null)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('RSVP:', formData)
+    setLoading(true)
+    setError(null)
+    const { error: err } = await supabase.from('rsvps').insert({
+      nombre: formData.nombre,
+      asiste: formData.asiste,
+      personas: formData.personas,
+      contacto: formData.contacto,
+      mensaje: formData.mensaje || null,
+    })
+    setLoading(false)
+    if (err) {
+      setError(err.message || 'No se pudo enviar. Inténtalo de nuevo.')
+      return
+    }
     setSubmitted(true)
   }
 
@@ -95,6 +112,11 @@ function App() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <p className="font-body text-sm text-red-600 bg-red-50 py-2 px-3 rounded-sm border border-red-100">
+                  {error}
+                </p>
+              )}
               <div>
                 <label htmlFor="nombre" className="block font-body text-sm text-[var(--ink)] mb-1">
                   Nombre(s) *
@@ -196,9 +218,10 @@ function App() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-6 rounded-sm font-heading text-lg font-semibold text-white bg-[var(--navy)] hover:bg-[var(--navy)]/90 focus:outline-none focus:ring-2 focus:ring-[var(--sage)] focus:ring-offset-2 transition"
+                disabled={loading}
+                className="w-full py-3.5 px-6 rounded-sm font-heading text-lg font-semibold text-white bg-[var(--navy)] hover:bg-[var(--navy)]/90 focus:outline-none focus:ring-2 focus:ring-[var(--sage)] focus:ring-offset-2 transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Enviar respuesta
+                {loading ? 'Enviando…' : 'Enviar respuesta'}
               </button>
             </form>
           )}
