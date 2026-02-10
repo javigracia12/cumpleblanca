@@ -1,11 +1,16 @@
-# Deploy en Cloudflare
+# Deploy en Cloudflare Workers
 
-Para que el deploy funcione, el **comando de deploy** en tu proyecto de Cloudflare debe ser:
+## Pasos en el dashboard
 
-```bash
-npm run deploy
-```
+1. Entra en **Cloudflare Dashboard** → **Workers & Pages**.
+2. Abre tu proyecto **cumpleblanca**.
+3. Ve a **Settings** (Configuración) del proyecto.
+4. Busca la sección **Build** o **Build configuration** (a veces está en "Builds" o al conectar el repo de GitHub).
+5. Donde diga **Build command** o **Deploy command**, pon exactamente:
+   ```bash
+   npm run deploy
+   ```
+6. Si hay un campo **Build output directory**, puedes dejarlo en blanco o poner `dist` (el script `npm run deploy` ya se encarga de generar `dist` y desplegarla).
+7. Guarda y lanza un **nuevo deploy** (botón "Deploy" o "Retry deployment").
 
-(Ese comando hace primero `npm run build` para generar la carpeta `dist` y luego `npx wrangler deploy`.)
-
-Si ahora mismo tienes solo `npx wrangler deploy`, cámbialo a `npm run deploy` en la configuración del proyecto en el dashboard de Cloudflare.
+Con eso, cada deploy ejecutará primero `npm run build` (genera la web en `dist`) y luego `npx wrangler deploy` (sube esa carpeta a Cloudflare).
