@@ -187,16 +187,16 @@ function App() {
 
               <div>
                 <label htmlFor="contacto" className="block font-body text-sm text-[var(--ink)] mb-1">
-                  Email o teléfono *
+                  Teléfono *
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   id="contacto"
                   name="contacto"
                   required
                   value={formData.contacto}
                   onChange={handleChange}
-                  placeholder="Para confirmaciones"
+                  placeholder="Tu número de teléfono"
                   className="w-full px-4 py-3 rounded-sm border border-[var(--border)] bg-[var(--paper)] font-body text-[var(--ink)] placeholder:text-[var(--ink-soft)]/70 focus:outline-none focus:ring-1 focus:ring-[var(--sage)] focus:border-[var(--sage)] transition"
                 />
               </div>
