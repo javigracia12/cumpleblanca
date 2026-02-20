@@ -13,10 +13,10 @@ npm run dev
 
 Abre [http://localhost:5173](http://localhost:5173).
 
-## Supabase (RSVP)
+## Supabase (RSVP y fotos)
 
-1. En Supabase **SQL Editor**, ejecuta el contenido de `supabase-rsvps.sql` para crear la tabla `rsvps` y las políticas RLS.
-2. Las respuestas aparecen en **Table Editor → rsvps**.
+1. **RSVP**: Ejecuta `supabase-rsvps.sql` en SQL Editor. Las respuestas aparecen en **Table Editor → rsvps**.
+2. **Fotos**: Ejecuta `supabase-storage-fotos.sql` en SQL Editor. Crea el bucket `photos-blanca` y la tabla `photos`. Las fotos aparecen en **Storage → photos-blanca** y el registro (quién envió) en **Table Editor → photos**.
 
 ## Variables de entorno
 

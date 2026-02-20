@@ -1,5 +1,186 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabase'
+
+const TARGET = new Date(2026, 6, 9, 20, 0, 0) // 9 julio 2026, 20:00
+
+function useCountdown(targetDate) {
+  const [diff, setDiff] = useState({ days: 0, hours: 0, mins: 0, secs: 0, isPast: false })
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date()
+      const ms = targetDate - now
+      if (ms <= 0) {
+        setDiff({ days: 0, hours: 0, mins: 0, secs: 0, isPast: true })
+        return
+      }
+      const days = Math.floor(ms / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const mins = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60))
+      const secs = Math.floor((ms % (1000 * 60)) / 1000)
+      setDiff({ days, hours, mins, secs, isPast: false })
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [targetDate])
+  return diff
+}
+
+function Countdown() {
+  const { days, hours, mins, secs, isPast } = useCountdown(TARGET)
+  if (isPast) {
+    return (
+      <p className="font-body text-sm text-[var(--ink-soft)] text-center">
+        La fiesta fue el 9 de julio
+      </p>
+    )
+  }
+  return (
+    <div className="text-center py-8">
+      <p className="font-body text-xs tracking-[0.15em] uppercase text-[var(--ink-soft)] mb-4">
+        Quedan
+      </p>
+      <div className="flex justify-center gap-6 sm:gap-8">
+        {[
+          { v: days, l: 'días' },
+          { v: hours, l: 'h' },
+          { v: mins, l: 'min' },
+          { v: secs, l: 's' },
+        ].map(({ v, l }) => (
+          <div key={l} className="flex flex-col items-center min-w-[3rem]">
+            <span className="font-heading text-2xl sm:text-3xl font-semibold tabular-nums text-[var(--navy)]">
+              {String(v).padStart(2, '0')}
+            </span>
+            <span className="font-body text-[10px] sm:text-xs text-[var(--ink-soft)] mt-0.5 tracking-wide">
+              {l}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="font-body text-xs text-[var(--ink-soft)] mt-4 tracking-wide">
+        9 de julio · 20:00
+      </p>
+    </div>
+  )
+}
+
+const BUCKET = 'photos-blanca'
+const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
+const ACCEPT = 'image/jpeg,image/png,image/webp,image/gif'
+
+function PhotosUpload() {
+  const [uploaded, setUploaded] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [nombre, setNombre] = useState('')
+  const [file, setFile] = useState(null)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!file) {
+      setError('Selecciona una foto.')
+      return
+    }
+    if (file.size > MAX_SIZE) {
+      setError('La foto no puede superar 5 MB.')
+      return
+    }
+    setLoading(true)
+    setError(null)
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+    const path = `${Date.now()}-${crypto.randomUUID()}.${ext}`
+    const { error: uploadErr } = await supabase.storage.from(BUCKET).upload(path, file, {
+      cacheControl: '3600',
+      upsert: false,
+    })
+    if (uploadErr) {
+      setLoading(false)
+      setError(uploadErr.message || 'No se pudo subir la foto.')
+      return
+    }
+    await supabase.from('photos').insert({ storage_path: path, nombre: nombre.trim() || null })
+    setLoading(false)
+    setUploaded(true)
+    setFile(null)
+    setNombre('')
+  }
+
+  return (
+    <div>
+      <h2 className="font-heading text-2xl font-semibold text-[var(--navy)] text-center mb-1">
+        Comparte una foto de Blanca
+      </h2>
+      <p className="font-body text-sm text-[var(--ink-soft)] text-center mb-8">
+        Sube una foto que tengas de ella para tener un álbum especial
+      </p>
+      {uploaded ? (
+        <div className="text-center py-10 px-6 bg-[var(--paper)] rounded-sm border border-[var(--border)]">
+          <p className="text-2xl text-[var(--sage)] mb-3">✓</p>
+          <p className="font-heading text-xl font-semibold text-[var(--ink)] mb-2">
+            ¡Gracias!
+          </p>
+          <p className="font-body text-sm text-[var(--ink-soft)] leading-relaxed">
+            La foto se ha subido correctamente. Puedes subir otra si quieres.
+          </p>
+          <button
+            type="button"
+            onClick={() => setUploaded(false)}
+            className="font-body text-sm text-[var(--navy)] font-medium mt-4 hover:underline"
+          >
+            Subir otra foto
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {error && (
+            <p className="font-body text-sm text-red-600 bg-red-50 py-2 px-3 rounded-sm border border-red-100">
+              {error}
+            </p>
+          )}
+          <div>
+            <label htmlFor="photo-nombre" className="block font-body text-sm text-[var(--ink)] mb-1">
+              ¿Quién envía la foto? (opcional)
+            </label>
+            <input
+              type="text"
+              id="photo-nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              placeholder="Tu nombre"
+              className="w-full px-4 py-3 rounded-sm border border-[var(--border)] bg-[var(--paper)] font-body text-[var(--ink)] placeholder:text-[var(--ink-soft)]/70 focus:outline-none focus:ring-1 focus:ring-[var(--sage)] focus:border-[var(--sage)] transition"
+            />
+          </div>
+          <div>
+            <label htmlFor="photo-file" className="block font-body text-sm text-[var(--ink)] mb-1">
+              Foto *
+            </label>
+            <input
+              type="file"
+              id="photo-file"
+              accept={ACCEPT}
+              required
+              onChange={(e) => {
+                setFile(e.target.files?.[0] || null)
+                setError(null)
+              }}
+              className="w-full px-4 py-3 rounded-sm border border-[var(--border)] bg-[var(--paper)] font-body text-[var(--ink)] file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-medium file:bg-[var(--navy)] file:text-white file:cursor-pointer hover:file:bg-[var(--navy)]/90 focus:outline-none focus:ring-1 focus:ring-[var(--sage)] focus:border-[var(--sage)] transition"
+            />
+            <p className="font-body text-xs text-[var(--ink-soft)] mt-1">
+              JPG, PNG, WebP o GIF. Máximo 5 MB.
+            </p>
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 px-6 rounded-sm font-heading text-lg font-semibold text-white bg-[var(--navy)] hover:bg-[var(--navy)]/90 focus:outline-none focus:ring-2 focus:ring-[var(--sage)] focus:ring-offset-2 transition disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Subiendo…' : 'Subir foto'}
+          </button>
+        </form>
+      )}
+    </div>
+  )
+}
 
 function App() {
   const [submitted, setSubmitted] = useState(false)
@@ -84,6 +265,8 @@ function App() {
               Marta y Javier
             </p>
           </div>
+
+          <Countdown />
         </div>
 
         {/* Línea suave antes del formulario */}
@@ -225,6 +408,11 @@ function App() {
               </button>
             </form>
           )}
+        </div>
+
+        {/* Subir fotos */}
+        <div className="px-8 sm:px-12 py-8 sm:py-10 border-t border-[var(--border)]">
+          <PhotosUpload />
         </div>
       </article>
     </div>
