@@ -107,10 +107,10 @@ function PhotosUpload() {
 
   return (
     <div>
-      <h2 className="font-heading text-2xl font-semibold text-[var(--navy)] text-center mb-1">
+      <h2 className="font-heading text-xl sm:text-2xl font-semibold text-[var(--navy)] mb-1">
         Comparte una foto de Blanca
       </h2>
-      <p className="font-body text-sm text-[var(--ink-soft)] text-center mb-8">
+      <p className="font-body text-sm text-[var(--ink-soft)] mb-6">
         Sube una foto que tengas de ella para tener un álbum especial
       </p>
       {uploaded ? (
@@ -220,70 +220,66 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen paper-texture py-8 sm:py-12 px-4 flex justify-center items-start">
-      {/* Una sola tarjeta-invitación */}
-      <article className="w-full max-w-lg bg-[var(--paper-card)] rounded-sm frame-watercolor overflow-hidden">
-        {/* Ilustración acuarela */}
-        <div className="relative pt-8 px-6 sm:px-10 flex justify-center">
-          <figure className="w-[72%] max-w-[280px] aspect-[3/4] rounded-sm overflow-hidden bg-[var(--paper)]">
-            <img
-              src="/blanca-invite.png"
-              alt="Blanca"
-              className="w-full h-full object-cover object-top"
-            />
-          </figure>
-        </div>
-
-        {/* Texto de la invitación */}
-        <div className="px-8 sm:px-12 pt-8 pb-6 text-center">
-          <p className="font-heading text-sm tracking-[0.2em] uppercase text-[var(--navy)] mb-4">
-            Estás invitado a los
-          </p>
-          <h1 className="font-heading text-4xl sm:text-5xl font-semibold text-[var(--ink)] leading-tight">
-            60 años de Blanca
-          </h1>
-          <p className="font-heading text-lg text-[var(--coral)] mt-2 italic">
-            Fiesta sorpresa
-          </p>
-
-          <div className="deco-line my-8 mx-auto w-24 rounded-full" />
-
-          <div className="text-left space-y-5 text-[var(--ink)]">
-            <p className="font-body text-base sm:text-lg leading-relaxed">
-              El <strong className="font-semibold text-[var(--navy)]">jueves 9 de julio</strong> Blanca cumple 60 años, y nos gustaría que nos acompañases en una pequeña fiesta sorpresa.
-            </p>
-            <p className="font-body text-base sm:text-lg leading-relaxed">
-              Será el mismo 9 de julio sobre las 8 de la tarde. El sitio está por confirmar. En cuanto sepamos el número de personas, os lo diremos.
-            </p>
-            <p className="font-body text-base sm:text-lg leading-relaxed">
-              Por favor, confirma tu asistencia en el formulario que encontrarás abajo.
-            </p>
-            <p className="font-body text-base font-semibold text-[var(--ink)] pt-2">
-              ¡Muchas gracias!
-            </p>
-            <p className="font-body text-sm text-[var(--ink-soft)]">
-              Marta y Javier
-            </p>
+    <div className="min-h-screen paper-texture py-6 sm:py-10 px-4 sm:px-6">
+      <article className="w-full max-w-6xl mx-auto bg-[var(--paper-card)] rounded-sm frame-watercolor overflow-hidden">
+        {/* Hero: ilustración + texto a ancho completo */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 px-6 sm:px-10 lg:px-14 pt-8 sm:pt-10 pb-6">
+          {/* Ilustración — ocupa menos en desktop para dar espacio al texto */}
+          <div className="lg:col-span-2 flex justify-center lg:justify-start items-start">
+            <figure className="w-[60%] sm:w-[45%] lg:w-full max-w-[240px] lg:max-w-none aspect-[3/4] rounded-sm overflow-hidden bg-[var(--paper)] shrink-0">
+              <img
+                src="/blanca-invite.png"
+                alt="Blanca"
+                className="w-full h-full object-cover object-top"
+              />
+            </figure>
           </div>
-
-          <Countdown />
+          {/* Texto + countdown */}
+          <div className="lg:col-span-3 flex flex-col justify-center">
+            <p className="font-heading text-sm tracking-[0.2em] uppercase text-[var(--navy)] mb-3">
+              Estás invitado a los
+            </p>
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-semibold text-[var(--ink)] leading-tight">
+              60 años de Blanca
+            </h1>
+            <p className="font-heading text-base sm:text-lg text-[var(--coral)] mt-2 italic">
+              Fiesta sorpresa
+            </p>
+            <div className="deco-line my-6 mx-0 lg:mx-0 w-24 rounded-full" />
+            <div className="text-left space-y-4 text-[var(--ink)]">
+              <p className="font-body text-sm sm:text-base lg:text-lg leading-relaxed">
+                El <strong className="font-semibold text-[var(--navy)]">jueves 9 de julio</strong> Blanca cumple 60 años, y nos gustaría que nos acompañases en una pequeña fiesta sorpresa.
+              </p>
+              <p className="font-body text-sm sm:text-base lg:text-lg leading-relaxed">
+                Será el mismo 9 de julio sobre las 8 de la tarde. El sitio está por confirmar. En cuanto sepamos el número de personas, os lo diremos.
+              </p>
+              <p className="font-body text-sm sm:text-base leading-relaxed">
+                Por favor, confirma tu asistencia y comparte una foto si quieres.
+              </p>
+              <p className="font-body text-sm font-semibold text-[var(--ink)]">
+                ¡Muchas gracias!
+              </p>
+              <p className="font-body text-sm text-[var(--ink-soft)]">
+                Marta y Javier
+              </p>
+            </div>
+            <Countdown />
+          </div>
         </div>
 
-        {/* Línea suave antes del formulario */}
-        <div className="px-8 sm:px-12">
-          <div className="h-px bg-[var(--border)]" />
-        </div>
+        {/* RSVP y Fotos: dos columnas en desktop, apiladas en móvil */}
+        <div className="border-t border-[var(--border)]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[var(--border)]">
+            {/* RSVP */}
+            <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-10">
+              <h2 className="font-heading text-xl sm:text-2xl font-semibold text-[var(--navy)] mb-1">
+                Confirma tu asistencia
+              </h2>
+              <p className="font-body text-sm text-[var(--ink-soft)] mb-6">
+                Rellena el formulario para que sepamos si nos acompañas
+              </p>
 
-        {/* RSVP */}
-        <div className="px-8 sm:px-12 py-8 sm:py-10">
-          <h2 className="font-heading text-2xl font-semibold text-[var(--navy)] text-center mb-1">
-            Confirma tu asistencia
-          </h2>
-          <p className="font-body text-sm text-[var(--ink-soft)] text-center mb-8">
-            Rellena el formulario para que sepamos si nos acompañas
-          </p>
-
-          {submitted ? (
+              {submitted ? (
             <div className="text-center py-10 px-6 bg-[var(--paper)] rounded-sm border border-[var(--border)]">
               <p className="text-2xl text-[var(--sage)] mb-3">✓</p>
               <p className="font-heading text-xl font-semibold text-[var(--ink)] mb-2">
@@ -408,11 +404,13 @@ function App() {
               </button>
             </form>
           )}
-        </div>
+            </div>
 
-        {/* Subir fotos */}
-        <div className="px-8 sm:px-12 py-8 sm:py-10 border-t border-[var(--border)]">
-          <PhotosUpload />
+            {/* Subir fotos — misma altura que RSVP en desktop */}
+            <div className="px-6 sm:px-10 lg:px-14 py-8 sm:py-10">
+              <PhotosUpload />
+            </div>
+          </div>
         </div>
       </article>
     </div>
