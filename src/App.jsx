@@ -108,10 +108,10 @@ function PhotosUpload() {
   return (
     <div>
       <h2 className="font-heading text-xl sm:text-2xl font-semibold text-[var(--navy)] mb-1">
-        Comparte una foto de Blanca
+        Comparte una foto con Blanca
       </h2>
       <p className="font-body text-sm text-[var(--ink-soft)] mb-6">
-        Sube una foto que tengas de ella para tener un álbum especial
+        Sube una foto que tengas con ella para tener un álbum especial
       </p>
       {uploaded ? (
         <div className="text-center py-10 px-6 bg-[var(--paper)] rounded-sm border border-[var(--border)]">
