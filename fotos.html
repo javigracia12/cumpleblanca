@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="theme-color" content="#ece3d3"/>
+<title>Recuerdos de Blanca · privado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#ece3d3; --card:#fbf8f1; --espresso:#221e18;
+  --ink:#2a241b; --paper:#f4eee2; --terra:#aa4a29; --terra-deep:#8c3c1f;
+  --camel:#b9925c; --muted:#6e6456; --line:rgba(42,36,27,.16);
+  --display:'Fraunces',Georgia,serif; --ui:'Hanken Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);line-height:1.6;
+  -webkit-font-smoothing:antialiased;font-size:17px;min-height:100vh}
+a{color:inherit}
+
+#app{max-width:1180px;margin:0 auto;padding:clamp(26px,5vw,52px) clamp(18px,4vw,40px) 90px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  border-bottom:1px solid var(--ink);padding-bottom:22px}
+.badge{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--terra-deep)}
+.head h1{font-family:var(--display);font-weight:600;font-size:clamp(32px,7vw,54px);line-height:1.02;letter-spacing:-.01em;margin-top:6px}
+.head .sub{font-size:14px;color:var(--muted);margin-top:8px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--ui);
+  font-weight:600;text-transform:uppercase;letter-spacing:.13em;font-size:13.5px;padding:15px 24px;border-radius:10px;
+  cursor:pointer;border:1px solid var(--terra);background:var(--terra);color:var(--paper);transition:.2s;text-decoration:none;white-space:nowrap}
+.btn:hover{filter:brightness(1.05)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+
+.tag{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.2em;font-size:12px;
+  color:var(--terra-deep);margin:46px 0 18px}
+.empty{color:var(--muted);font-style:italic;font-family:var(--display);font-size:18px}
+.loading{color:var(--muted);font-family:var(--display);font-style:italic;font-size:18px;margin-top:8px}
+
+/* photo cards (image + its message + download) */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+@media(max-width:520px){.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}}
+.ph{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 14px 30px -22px rgba(34,30,24,.4)}
+.ph img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;cursor:zoom-in;transition:transform .4s}
+.ph img:hover{transform:scale(1.03)}
+.ph figcaption{padding:15px 17px 17px;display:flex;flex-direction:column;gap:7px}
+.ph .who{font-family:var(--ui);font-weight:600;font-size:12.5px;color:var(--terra-deep);text-transform:uppercase;letter-spacing:.07em}
+.ph .msg{font-family:var(--display);font-style:italic;font-size:16.5px;line-height:1.42;color:var(--ink)}
+.ph .dt{font-size:12px;color:var(--muted)}
+.ph .dl{margin-top:4px;align-self:flex-start;font-family:var(--ui);font-weight:600;font-size:12px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--terra);text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+.ph .dl:hover{color:var(--terra-deep)}
+.ph .dl svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* text-only messages */
+.msgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.msg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.msg .q{font-family:var(--display);font-style:italic;font-size:19px;line-height:1.45}
+.msg .by{font-family:var(--ui);font-weight:600;font-size:12.5px;color:var(--terra-deep);margin-top:12px;text-transform:uppercase;letter-spacing:.08em}
+.msg .dt{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:50;background:rgba(20,16,12,.93);display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column;gap:16px}
+#lb.open{display:flex}
+#lb img{max-width:100%;max-height:74vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#lb .cap{color:#f4eee2;font-family:var(--display);font-style:italic;font-size:18px;text-align:center;max-width:40ch}
+#lb .lb-bar{display:flex;gap:12px}
+#lb .lb-bar a,#lb .lb-bar button{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.12em;font-size:13px;
+  padding:12px 22px;border-radius:10px;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;cursor:pointer;text-decoration:none}
+#lb .lb-bar a{background:#fff;color:var(--ink);border-color:#fff}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<main id="app">
+  <div class="head">
+    <div>
+      <div class="badge">Recuerdos · privado</div>
+      <h1>Recuerdos para Blanca</h1>
+      <div class="sub" id="counts">Cargando…</div>
+    </div>
+    <button class="btn" id="dl-all" disabled>
+      <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+      Descargar todas las fotos
+    </button>
+  </div>
+
+  <div class="tag">Fotos</div>
+  <div class="grid" id="fotos"><p class="loading">Cargando fotos…</p></div>
+
+  <div class="tag">Mensajes</div>
+  <div class="msgs" id="msgs"><p class="loading">Cargando mensajes…</p></div>
+</main>
+
+<div id="lb">
+  <img id="lb-img" alt=""/>
+  <div class="cap" id="lb-cap"></div>
+  <div class="lb-bar">
+    <a id="lb-dl" download="recuerdo.jpg" href="#">Descargar</a>
+    <button id="lb-close">Cerrar</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyDCUgvIqyuyJMuu1yDWqwl0ZFoyKAoSumo",
+  authDomain:        "cumpleblanca-3acce.firebaseapp.com",
+  projectId:         "cumpleblanca-3acce",
+  storageBucket:     "cumpleblanca-3acce.firebasestorage.app",
+  messagingSenderId: "774541383383",
+  appId:             "1:774541383383:web:fc3ca378d802476d6e8292",
+  measurementId:     "G-YS6G2JMW1X"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const slug = s => (String(s||'blanca').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')||'blanca').toLowerCase();
+const fmtDate = ts => { try { const d = ts && ts.toDate ? ts.toDate() : null;
+  return d ? d.toLocaleDateString('es-ES',{day:'numeric',month:'long'}) + ' · ' + d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) : ''; } catch(e){ return ''; } };
+
+let fotos = [];   // {data, nombre, mensaje}
+
+cargar();
+
+async function cargar(){
+  // FOTOS (cada una con su mensaje)
+  try {
+    const snap = await getDocs(query(collection(db,'fotos'), orderBy('creado','desc')));
+    fotos = snap.docs.map(d => d.data());
+    const cont = $('#fotos');
+    if (!fotos.length) cont.innerHTML = '<p class="empty">Aún no hay fotos.</p>';
+    else cont.innerHTML = fotos.map((x,i) => {
+      const who = esc(x.nombre);
+      const msg = x.mensaje ? `<div class="msg">“${esc(x.mensaje)}”</div>` : '';
+      return `<figure class="ph">
+        <img loading="lazy" src="${x.data}" alt="Foto de ${who}" data-i="${i}"/>
+        <figcaption>
+          <span class="who">${who}</span>
+          ${msg}
+          <span class="dt">${fmtDate(x.creado)}</span>
+          <a class="dl" download="recuerdo-${i+1}-${slug(x.nombre)}.jpg" href="${x.data}">
+            <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-4-4m4 4l4-4M5 20h14"/></svg> Descargar
+          </a>
+        </figcaption>
+      </figure>`;
+    }).join('');
+    cont.querySelectorAll('img').forEach(img => img.addEventListener('click', () => {
+      const x = fotos[+img.dataset.i]; openLB(x);
+    }));
+    $('#dl-all').disabled = fotos.length === 0;
+  } catch(e){ $('#fotos').innerHTML = err('las fotos', e); }
+
+  // MENSAJES sin foto
+  try {
+    const snap = await getDocs(query(collection(db,'mensajes'), orderBy('creado','desc')));
+    const cont = $('#msgs');
+    if (snap.empty) cont.innerHTML = '<p class="empty">No hay mensajes sueltos (los que vienen con foto aparecen arriba).</p>';
+    else cont.innerHTML = snap.docs.map(d => { const x = d.data(); return `
+      <div class="msg"><div class="q">“${esc(x.mensaje)}”</div><div class="by">${esc(x.nombre)}</div><div class="dt">${fmtDate(x.creado)}</div></div>`; }).join('');
+    $('#counts').textContent = `${fotos.length} foto(s) · ${snap.size} mensaje(s) suelto(s)`;
+  } catch(e){ $('#msgs').innerHTML = err('los mensajes', e); }
+}
+
+function err(qué, e){
+  const c = e.code || e.message || '';
+  const extra = String(c).includes('permission') ? ' — revisa que las reglas de Firestore permitan lectura (allow read: if true).' : ` (${c})`;
+  return `<p class="empty">No se pudieron cargar ${qué}${extra}</p>`;
+}
+
+// Descargar todas (secuencial; el navegador puede pedir permiso para varias descargas)
+$('#dl-all').addEventListener('click', async () => {
+  const btn = $('#dl-all'); btn.disabled = true;
+  for (let i = 0; i < fotos.length; i++){
+    const a = document.createElement('a');
+    a.href = fotos[i].data;
+    a.download = `recuerdo-${i+1}-${slug(fotos[i].nombre)}.jpg`;
+    document.body.appendChild(a); a.click(); a.remove();
+    await new Promise(r => setTimeout(r, 450));
+  }
+  btn.disabled = false;
+});
+
+// LIGHTBOX
+const lb = $('#lb');
+function openLB(x){
+  $('#lb-img').src = x.data;
+  $('#lb-cap').textContent = x.mensaje ? `“${x.mensaje}” — ${x.nombre||''}` : (x.nombre||'');
+  $('#lb-dl').href = x.data;
+  lb.classList.add('open');
+}
+$('#lb-close').addEventListener('click', () => lb.classList.remove('open'));
+lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+</script>
+</body>
+</html>
