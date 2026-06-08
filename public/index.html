@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Blanca cumple 60 · Fiesta sorpresa · 9 de julio · Casa Baldo, Zaragoza"/>
+<meta name="theme-color" content="#ece3d3"/>
+<title>Blanca · 60</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#ece3d3;          /* warm oat / cream */
+  --bg-soft:#f4eee2;
+  --espresso:#221e18;    /* warm near-black (dark section) */
+  --ink:#2a241b;         /* strong text on cream */
+  --paper:#f4eee2;       /* cream text on dark */
+  --terra:#aa4a29;       /* terracotta accent (large) */
+  --terra-deep:#8c3c1f;  /* deeper terracotta (small text) */
+  --camel:#b9925c;       /* tan / camel */
+  --muted:#6e6456;       /* secondary text — readable on cream */
+  --line:rgba(42,36,27,.17); --line-soft:rgba(42,36,27,.09);
+  --display:'Fraunces',Georgia,serif;
+  --ui:'Hanken Grotesk',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-weight:400;line-height:1.65;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;position:relative;font-size:17px}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.045;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::selection{background:var(--terra);color:var(--paper)}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--camel)}
+a{color:inherit}
+
+/* ── MARQUEES (clean sans, upright, legible) ──────────────────── */
+.marquee{display:flex;overflow:hidden;white-space:nowrap;width:100%}
+.marquee .track{display:flex;flex-shrink:0;min-width:100%;align-items:center;animation:scroll var(--spd,40s) linear infinite}
+.marquee.rev .track{animation-direction:reverse}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-100%)}}
+.mq-item{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.12em;
+  display:inline-flex;align-items:center;gap:24px;padding-right:24px}
+.mq-item .dot{font-size:.5em;transform:translateY(-2px)}
+.band-dark{background:var(--espresso);color:var(--paper)}
+.band-dark .mq-item{font-size:clamp(13px,3vw,16px);padding:14px 0;padding-right:24px}
+.band-dark .mq-item .dot{color:var(--camel)}
+.band-line{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band-line .mq-item{font-size:clamp(12px,2.8vw,15px);padding:14px 0;padding-right:24px;color:var(--muted)}
+.band-line .mq-item .dot{color:var(--terra)}
+
+/* ── HERO ─────────────────────────────────────────────────────── */
+#hero{position:relative}
+.hero-grid{max-width:1220px;margin:0 auto;padding:clamp(40px,6vw,78px) 28px clamp(32px,5vw,54px);
+  display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(32px,5vw,68px);align-items:center;min-height:calc(100svh - 50px)}
+@media(max-width:840px){.hero-grid{grid-template-columns:1fr;min-height:auto;gap:36px;padding-top:36px}}
+.kicker{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.2em;
+  font-size:13px;color:var(--terra-deep);margin-bottom:clamp(20px,3vw,30px);display:flex;align-items:center;gap:13px}
+.kicker::before{content:'';width:34px;height:1px;background:var(--terra)}
+.clip{overflow:hidden;display:block}
+.clip>span{display:block;transform:translateY(106%);animation:rise 1s cubic-bezier(.16,1,.3,1) forwards}
+.clip.k1>span{animation-delay:.05s}.clip.k2>span{animation-delay:.18s}.clip.k3>span{animation-delay:.32s}
+@keyframes rise{to{transform:none}}
+.hero-h1{font-family:var(--display);line-height:.96;letter-spacing:-.012em}
+.hero-h1 .l1{font-size:clamp(66px,15.5vw,154px);font-weight:600;color:var(--ink)}
+.hero-h1 .l2{font-size:clamp(34px,8vw,76px);font-weight:400;color:var(--ink);margin-top:.06em;font-style:italic}
+.hero-h1 .l2 .num{color:var(--terra);font-style:normal;font-weight:600}
+.hero-sub{font-family:var(--ui);font-weight:400;font-size:clamp(17px,3.3vw,21px);color:var(--ink);
+  margin-top:clamp(22px,3vw,32px);max-width:34ch;line-height:1.55}
+.hero-sub b{font-weight:600}
+
+.hero-photo{position:relative;justify-self:center;width:min(384px,80vw);opacity:0;animation:fadeIn 1.2s .55s forwards}
+@keyframes fadeIn{to{opacity:1}}
+.hero-photo::before{content:'';position:absolute;inset:0;transform:translate(14px,14px);background:var(--camel);opacity:.4;z-index:0}
+.hero-photo .frame{position:relative;z-index:1;padding:13px;background:var(--bg-soft);
+  box-shadow:0 34px 64px -36px rgba(34,30,24,.55);border:1px solid var(--line)}
+.hero-photo .frame::after{content:'';position:absolute;inset:13px;border:1px solid var(--line);pointer-events:none}
+.hero-photo img{display:block;width:100%;aspect-ratio:1/1.2;object-fit:cover;object-position:50% 14%;filter:contrast(1.02) saturate(1.02)}
+.hero-photo .noimg-fallback{display:none;width:100%;aspect-ratio:1/1.2;align-items:center;justify-content:center;
+  background:var(--bg);font-family:var(--display);font-weight:500;font-size:70px;color:var(--terra)}
+.hero-photo.noimg img{display:none}.hero-photo.noimg .noimg-fallback{display:flex}
+.seal{position:absolute;z-index:2;right:-20px;bottom:-20px;width:clamp(90px,21vw,112px);height:clamp(90px,21vw,112px)}
+.seal svg{width:100%;height:100%;animation:spin 26s linear infinite}
+.seal svg text{font-family:var(--ui);font-weight:600;font-size:12.5px;letter-spacing:.16em;fill:var(--ink);text-transform:uppercase}
+.seal .disc{position:absolute;inset:0;margin:auto;width:56%;height:56%;border-radius:50%;background:var(--terra);
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;
+  font-size:clamp(26px,6.6vw,34px);color:var(--paper)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.scrolldown{display:flex;justify-content:center;gap:11px;align-items:center;padding-bottom:24px;color:var(--muted);
+  font-family:var(--ui);font-weight:500;text-transform:uppercase;letter-spacing:.2em;font-size:11px}
+.scrolldown svg{width:17px;height:17px;stroke:var(--terra);fill:none;stroke-width:1.8;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ── SECTIONS ─────────────────────────────────────────────────── */
+.sec{max-width:1040px;margin:0 auto;padding:clamp(64px,9vw,112px) 28px}
+.sec-label{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.2em;
+  font-size:13px;color:var(--terra-deep);margin-bottom:26px}
+.sec-h{font-family:var(--display);line-height:1.02;font-size:clamp(40px,8.5vw,82px);font-weight:600;letter-spacing:-.01em}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.22s}.reveal.d3{transition-delay:.34s}
+
+.info{border-top:1px solid var(--ink)}
+.irow{display:grid;grid-template-columns:minmax(110px,.4fr) 1fr auto;gap:22px;align-items:center;
+  padding:clamp(26px,4vw,40px) 0;border-bottom:1px solid var(--line)}
+@media(max-width:680px){.irow{grid-template-columns:1fr;gap:12px;text-align:left}}
+.ik{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;color:var(--muted)}
+.iv{font-family:var(--display);font-size:clamp(32px,7vw,58px);line-height:1;font-weight:600;letter-spacing:-.01em}
+.iv small{display:block;font-family:var(--ui);font-weight:400;font-size:15px;letter-spacing:0;color:var(--muted);margin-top:9px}
+
+.sched{margin-top:8px}
+.srow{display:flex;align-items:baseline;gap:clamp(18px,4vw,34px);padding:clamp(16px,3vw,23px) 0;border-bottom:1px solid var(--line)}
+.srow:first-child{border-top:1px solid var(--line)}
+.st{font-family:var(--display);font-weight:600;font-size:clamp(32px,8vw,58px);line-height:.95;min-width:clamp(96px,23vw,148px);letter-spacing:-.01em}
+.sd{font-family:var(--ui);font-weight:500;font-size:clamp(15px,3.6vw,18.5px);color:var(--ink);letter-spacing:0}
+.srow.hot .st{color:var(--terra)}.srow.hot .sd{color:var(--terra-deep)}
+
+.statement{font-family:var(--display);line-height:1.12;font-weight:500;letter-spacing:-.005em;
+  font-size:clamp(27px,6.2vw,52px);margin-top:clamp(48px,7vw,80px)}
+.statement .r{color:var(--terra);font-style:italic}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:13px;font-family:var(--ui);text-transform:uppercase;font-weight:600;
+  letter-spacing:.13em;font-size:13.5px;padding:18px 32px;border-radius:3px;text-decoration:none;cursor:pointer;
+  border:1px solid var(--terra);background:var(--terra);color:var(--paper);
+  transition:background .25s,color .25s,transform .25s;-webkit-tap-highlight-color:transparent;line-height:1}
+.btn .arr{transition:transform .25s;font-size:1.45em;line-height:0;margin-top:-1px}
+.btn:hover{background:transparent;color:var(--terra);transform:translateY(-2px)}
+.btn:hover .arr{transform:translateX(5px)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* photos block (dark) */
+#photos{background:var(--espresso);color:var(--paper)}
+#photos .sec-label{color:var(--camel)}
+#photos .sec-h{color:var(--paper)}
+#photos .pcopy{font-family:var(--ui);font-weight:400;font-size:clamp(17px,3.6vw,21px);line-height:1.6;
+  color:var(--paper);max-width:42ch;margin:24px 0 36px;opacity:.9}
+#photos .btn{background:var(--terra);color:var(--paper);border-color:var(--terra)}
+#photos .btn:hover{background:transparent;color:var(--camel);border-color:var(--camel)}
+/* upload form (on dark espresso) */
+.mform{margin-top:8px;max-width:540px;display:flex;flex-direction:column;gap:22px}
+.mform .field{display:flex;flex-direction:column;gap:9px;text-align:left}
+.mform label{font-family:var(--ui);font-weight:600;font-size:14.5px;letter-spacing:.01em;color:var(--paper)}
+.mform label .opt{font-weight:400;color:var(--camel)}
+.mform input[type=text],.mform textarea{font-family:var(--ui);font-size:16px;color:var(--paper);width:100%;
+  background:rgba(244,238,226,.06);border:1px solid rgba(244,238,226,.26);border-radius:4px;padding:14px 16px;
+  transition:border-color .2s,background .2s}
+.mform input::placeholder,.mform textarea::placeholder{color:rgba(244,238,226,.42)}
+.mform input:focus,.mform textarea:focus{outline:none;border-color:var(--terra);background:rgba(244,238,226,.1)}
+.mform textarea{resize:vertical;min-height:92px;line-height:1.55}
+.filebtn{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;cursor:pointer;
+  font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.12em;font-size:13px;
+  padding:13px 22px;border:1px solid var(--camel);border-radius:3px;color:var(--paper);background:transparent;transition:background .2s}
+.filebtn:hover{background:rgba(244,238,226,.08)}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.thumb{width:66px;height:66px;border-radius:4px;background-size:cover;background-position:center;border:1px solid rgba(244,238,226,.3)}
+.mform .btn{align-self:flex-start;margin-top:6px}
+.mform .btn:disabled{opacity:.5;cursor:default;transform:none}
+.mstatus{font-family:var(--ui);font-size:14.5px;min-height:1.3em;color:var(--camel);margin:0}
+.mstatus.ok{color:#9ec089}.mstatus.err{color:#e8a07e}
+/* playlist */
+.playlist{margin-top:42px;max-width:540px}
+.pl-copy{font-family:var(--ui);font-weight:400;font-size:clamp(15px,3.4vw,17px);line-height:1.55;color:var(--paper);opacity:.9;margin:0 0 16px;max-width:42ch}
+.pl-embed{border:0;display:block;border-radius:12px;box-shadow:0 18px 34px -20px rgba(0,0,0,.55)}
+
+footer .foot-in{max-width:1040px;margin:0 auto;padding:clamp(58px,8vw,88px) 28px;text-align:center}
+.foot-h{font-family:var(--display);font-size:clamp(34px,8vw,66px);line-height:1.02;font-weight:600;letter-spacing:-.01em}
+.foot-meta{font-family:var(--ui);font-weight:600;text-transform:uppercase;letter-spacing:.2em;font-size:12.5px;color:var(--muted);margin-top:22px}
+
+/* ── MÓVIL (≈99% lo abrirá en el teléfono) ───────────────────── */
+@media(max-width:560px){
+  .sec{padding-left:21px;padding-right:21px}
+  .hero-grid{padding-left:21px;padding-right:21px;gap:28px}
+  /* CTAs a todo el ancho = más fáciles de tocar con el pulgar */
+  .btn{width:100%;justify-content:center;padding:17px 24px}
+  .mform,.playlist{max-width:100%}
+  /* la hora y el plan, más cómodos en pantalla estrecha */
+  .srow{gap:16px}
+  .st{min-width:88px}
+  .hero-photo{width:min(330px,78vw)}
+  .seal{right:-12px;bottom:-12px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .clip>span{transform:none}.hero-photo{opacity:1}.reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- top ticker -->
+<div class="marquee band-dark" style="--spd:42s"><div class="track" id="mq-top"></div><div class="track" aria-hidden="true" id="mq-top2"></div></div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="kicker">Fiesta sorpresa · 9 julio 2026</div>
+      <h1 class="hero-h1">
+        <span class="clip k1"><span class="l1">Blanca</span></span>
+        <span class="clip k2"><span class="l2">cumple <span class="num">60</span></span></span>
+      </h1>
+      <p class="hero-sub clip k3"><span>Seis décadas. Una noche. Y lo vamos a celebrar <b>como se merece</b>.</span></p>
+    </div>
+
+    <div class="hero-photo" id="photo">
+      <div class="frame">
+        <img id="portrait-img" alt="Blanca" src="assets/blanca.jpg"
+             onerror="document.getElementById('photo').classList.add('noimg');this.style.display='none'"/>
+        <div class="noimg-fallback">B</div>
+      </div>
+      <div class="seal" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
+          <text><textPath href="#ring" startOffset="0">· Es una sorpresa · 9 de julio · 20:00 h ·&nbsp;</textPath></text>
+        </svg>
+        <span class="disc">60</span>
+      </div>
+    </div>
+  </div>
+  <div class="scrolldown">Sigue bajando <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+</section>
+
+<!-- separator ticker -->
+<div class="marquee rev band-line" style="--spd:46s">
+  <div class="track" id="mq-mid"></div><div class="track" aria-hidden="true" id="mq-mid2"></div>
+</div>
+
+<!-- ── INFO ── -->
+<section>
+  <div class="sec">
+    <div class="sec-label reveal">Lo que tienes que saber</div>
+    <div class="info reveal d1">
+      <div class="irow">
+        <div class="ik">Dónde</div>
+        <div class="iv">Casa Baldo<small>Zaragoza</small></div>
+        <a class="btn btn-ghost" id="maps-btn" href="#" target="_blank" rel="noopener">Cómo llegar <span class="arr">→</span></a>
+      </div>
+      <div class="irow">
+        <div class="ik">Cuándo</div>
+        <div class="iv">Jueves 9 de julio<small>2026</small></div>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="sched reveal d1" style="margin-top:clamp(48px,7vw,72px)">
+      <div class="sec-label">El horario</div>
+      <div class="srow"><span class="st">20:00</span><span class="sd">Llegamos todos y nos colocamos</span></div>
+      <div class="srow hot"><span class="st">20:30</span><span class="sd">Llega Blanca — la sorpresa</span></div>
+      <div class="srow"><span class="st">22:30</span><span class="sd">Se acaba la fiesta</span></div>
+    </div>
+
+    <p class="statement reveal d2">Es una sorpresa.<br><span class="r">Llega a las 20:00 y ni una palabra.</span></p>
+  </div>
+</section>
+
+<!-- ── PHOTOS (dark) ── -->
+<section id="photos">
+  <div class="sec">
+    <div class="sec-label reveal">Un regalo entre todos</div>
+    <h2 class="sec-h reveal d1">El vídeo de su vida</h2>
+    <p class="pcopy reveal d1">Estamos preparando un vídeo con los recuerdos de Blanca para el gran día. Comparte tus fotos con ella —de cualquier época— y unas palabras bonitas.</p>
+
+    <form id="memory-form" class="mform reveal d2" novalidate>
+      <div class="field">
+        <label for="mf-name">Tu nombre</label>
+        <input id="mf-name" type="text" maxlength="120" autocomplete="name" placeholder="¿Cómo te llamas?"/>
+      </div>
+      <div class="field">
+        <label for="mf-msg">Tu mensaje para Blanca <span class="opt">(opcional)</span></label>
+        <textarea id="mf-msg" rows="3" maxlength="2000" placeholder="Escríbele unas palabras bonitas…"></textarea>
+      </div>
+      <div class="field">
+        <label>Tus fotos <span class="opt">(puedes elegir varias)</span></label>
+        <label class="filebtn" for="mf-files"><span style="font-size:1.3em;line-height:0">＋</span> Añadir fotos</label>
+        <input id="mf-files" type="file" accept="image/*" multiple hidden/>
+        <div class="thumbs" id="mf-thumbs"></div>
+      </div>
+      <button type="submit" class="btn" id="mf-submit">Enviar <span class="arr">→</span></button>
+      <p class="mstatus" id="mf-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="playlist reveal d2">
+      <div class="sec-label" style="margin-bottom:12px">La playlist de la fiesta</div>
+      <p class="pl-copy">¿Cuál es la canción que no puede faltar? Ábrela y añádela tú mismo a la playlist.</p>
+      <iframe class="pl-embed" title="Playlist de la fiesta"
+              src="https://open.spotify.com/embed/playlist/6CtrsVHwOzhmArSReQvBkn?utm_source=generator&theme=0"
+              width="100%" height="152" frameborder="0" loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+      <a class="btn" id="pl-btn" style="margin-top:18px" href="https://open.spotify.com/playlist/6CtrsVHwOzhmArSReQvBkn" target="_blank" rel="noopener">Añade tu canción <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- bottom ticker -->
+<div class="marquee band-dark" style="--spd:40s"><div class="track" id="mq-bot"></div><div class="track" aria-hidden="true" id="mq-bot2"></div></div>
+
+<footer>
+  <div class="foot-in">
+    <h2 class="foot-h reveal">Nos vemos en Casa Baldo</h2>
+    <p class="foot-meta reveal d1">Con cariño · La familia</p>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   ⚙️  CONFIG — edita aquí lo importante
+════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  portraitUrl:'assets/blanca.jpg',
+  mapsUrl:'https://www.google.com/maps/search/?api=1&query=Casa%20Baldo%20Zaragoza', // pega el enlace real de Google Maps
+};
+
+const $=s=>document.querySelector(s);
+
+$('#portrait-img').src=CONFIG.portraitUrl;
+$('#maps-btn').href=CONFIG.mapsUrl;
+
+const ticker=(txt,n=8)=>Array.from({length:n}).map(()=>`<span class="mq-item">${txt}<span class="dot">●</span></span>`).join('');
+$('#mq-top').innerHTML=$('#mq-top2').innerHTML=ticker('Blanca cumple 60');
+$('#mq-mid').innerHTML=$('#mq-mid2').innerHTML=ticker('Casa Baldo &nbsp;·&nbsp; Zaragoza &nbsp;·&nbsp; 9 julio &nbsp;·&nbsp; 20:00');
+$('#mq-bot').innerHTML=$('#mq-bot2').innerHTML=ticker('Es una sorpresa');
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.16});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FIREBASE · guarda las fotos y los mensajes
+     PASOS (ver explicación del chat):
+       1) console.firebase.google.com → crea/abre tu proyecto
+       2) Crea una app Web (</>) y copia su config en firebaseConfig ↓
+       3) Activa Firestore Database  (NO hace falta Storage)
+       4) Pega las reglas de Firestore que te he dado
+════════════════════════════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+// ⬇️⬇️  PEGA AQUÍ TU CONFIG DE FIREBASE  ⬇️⬇️
+//  (Consola → ⚙ Configuración del proyecto → Tus apps → SDK config → Config)
+const firebaseConfig = {
+  apiKey:            "AIzaSyDCUgvIqyuyJMuu1yDWqwl0ZFoyKAoSumo",
+  authDomain:        "cumpleblanca-3acce.firebaseapp.com",
+  projectId:         "cumpleblanca-3acce",
+  storageBucket:     "cumpleblanca-3acce.firebasestorage.app",
+  messagingSenderId: "774541383383",
+  appId:             "1:774541383383:web:fc3ca378d802476d6e8292",
+  measurementId:     "G-YS6G2JMW1X"
+};
+
+const READY = !String(firebaseConfig.apiKey).startsWith("TU_");
+let db;
+if (READY) { const app = initializeApp(firebaseConfig); db = getFirestore(app); }
+
+// Encoge la foto en el navegador para que quepa en Firestore (máx ~1 MB por documento)
+function comprimir(file, maxDim = 1600){
+  return new Promise((resolve, reject) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let w = img.naturalWidth, h = img.naturalHeight;
+      if (Math.max(w, h) > maxDim){ const s = maxDim / Math.max(w, h); w = Math.round(w*s); h = Math.round(h*s); }
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      let q = 0.72, data = c.toDataURL('image/jpeg', q);
+      while (data.length > 900000 && q > 0.4){ q -= 0.1; data = c.toDataURL('image/jpeg', q); }
+      resolve(data);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('formato-no-compatible')); };
+    img.src = url;
+  });
+}
+
+const form     = document.getElementById('memory-form');
+const fileIn   = document.getElementById('mf-files');
+const thumbs   = document.getElementById('mf-thumbs');
+const statusEl = document.getElementById('mf-status');
+const submit   = document.getElementById('mf-submit');
+let files = [];
+
+const say = (m, k = '') => { statusEl.textContent = m; statusEl.className = 'mstatus ' + k; };
+
+fileIn.addEventListener('change', () => {
+  files = [...fileIn.files];
+  thumbs.innerHTML = '';
+  files.forEach(f => {
+    const d = document.createElement('div');
+    d.className = 'thumb';
+    d.style.backgroundImage = `url('${URL.createObjectURL(f)}')`;
+    thumbs.appendChild(d);
+  });
+  say(files.length ? `${files.length} foto(s) seleccionada(s)` : '');
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nombre  = document.getElementById('mf-name').value.trim();
+  const mensaje = document.getElementById('mf-msg').value.trim();
+  if (!nombre)                        return say('Pon tu nombre, por favor.', 'err');
+  if (!mensaje && files.length === 0) return say('Escribe un mensaje o añade alguna foto.', 'err');
+  if (!READY)                           return say('Falta configurar Firebase (pega tu config en el código).', 'err');
+
+  submit.disabled = true;
+  try {
+    for (let i = 0; i < files.length; i++) {
+      say(`Preparando foto ${i + 1} de ${files.length}…`);
+      const data = await comprimir(files[i]);
+      say(`Guardando foto ${i + 1} de ${files.length}…`);
+      await addDoc(collection(db, 'fotos'), { nombre, mensaje, data, creado: serverTimestamp() });
+    }
+    // mensaje sin foto → se guarda aparte para no perderlo
+    if (mensaje && files.length === 0) {
+      say('Guardando tu mensaje…');
+      await addDoc(collection(db, 'mensajes'), { nombre, mensaje, creado: serverTimestamp() });
+    }
+    form.reset(); files = []; thumbs.innerHTML = '';
+    say('¡Gracias! Lo hemos recibido todo 🤍', 'ok');
+  } catch (err) {
+    console.error('Error al enviar:', err);
+    const code = (err && (err.code || err.message)) ? (err.code || err.message) : '';
+    let msg = 'Uy, algo ha fallado. Inténtalo de nuevo.';
+    if (String(code).includes('permission-denied'))
+      msg = 'Las reglas de Firestore no permiten guardar todavía. Publícalas en la consola.';
+    else if (String(code).includes('formato-no-compatible'))
+      msg = 'Una foto tiene un formato que el navegador no puede leer. Prueba con otra (JPG).';
+    else if (String(code).includes('exceeds') || String(code).includes('invalid'))
+      msg = 'Una foto pesa demasiado incluso comprimida. Avísame y la ajusto.';
+    say(msg + (code && !String(code).includes('formato') ? ` (${code})` : ''), 'err');
+  } finally {
+    submit.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+FOTO DE BLANCA
+==============
+
+Guarda aquí la foto de tu madre con el nombre exacto:
+
+    blanca.jpg
+
+Es decir, la ruta debe quedar:  birthday/assets/blanca.jpg
+
+La web la coloca sola en el marco de acuarela del inicio.
+Si quieres usar otro nombre o formato (png), cambia "portraitUrl"
+en el bloque CONFIG de index.html.
+
+Recomendado: foto vertical (retrato), mínimo 800 px de ancho.
