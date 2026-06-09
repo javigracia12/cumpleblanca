@@ -96,6 +96,9 @@ a{color:inherit}
 
   <div class="tag">Mensajes</div>
   <div class="msgs" id="msgs"><p class="loading">Cargando mensajes…</p></div>
+
+  <div class="tag">Canciones sugeridas</div>
+  <div class="msgs" id="canciones"><p class="loading">Cargando canciones…</p></div>
 </main>
 
 <div id="lb">
@@ -134,6 +137,7 @@ let fotos = [];   // {data, nombre, mensaje}
 cargar();
 
 async function cargar(){
+  let nMsgs = 0, nCanciones = 0;
   // FOTOS (cada una con su mensaje)
   try {
     const snap = await getDocs(query(collection(db,'fotos'), orderBy('creado','desc')));
@@ -168,8 +172,20 @@ async function cargar(){
     if (snap.empty) cont.innerHTML = '<p class="empty">No hay mensajes sueltos (los que vienen con foto aparecen arriba).</p>';
     else cont.innerHTML = snap.docs.map(d => { const x = d.data(); return `
       <div class="msg"><div class="q">“${esc(x.mensaje)}”</div><div class="by">${esc(x.nombre)}</div><div class="dt">${fmtDate(x.creado)}</div></div>`; }).join('');
-    $('#counts').textContent = `${fotos.length} foto(s) · ${snap.size} mensaje(s) suelto(s)`;
+    nMsgs = snap.size;
   } catch(e){ $('#msgs').innerHTML = err('los mensajes', e); }
+
+  // CANCIONES sugeridas
+  try {
+    const snap = await getDocs(query(collection(db,'canciones'), orderBy('creado','desc')));
+    nCanciones = snap.size;
+    const cont = $('#canciones');
+    if (snap.empty) cont.innerHTML = '<p class="empty">Aún no hay canciones sugeridas.</p>';
+    else cont.innerHTML = snap.docs.map(d => { const x = d.data(); return `
+      <div class="msg"><div class="q">${esc(x.cancion)}</div><div class="by">${esc(x.nombre)}</div><div class="dt">${fmtDate(x.creado)}</div></div>`; }).join('');
+  } catch(e){ $('#canciones').innerHTML = err('las canciones', e); }
+
+  $('#counts').textContent = `${fotos.length} foto(s) · ${nMsgs} mensaje(s) · ${nCanciones} canción(es)`;
 }
 
 function err(qué, e){

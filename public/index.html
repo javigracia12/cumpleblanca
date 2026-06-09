@@ -216,7 +216,7 @@ footer .foot-in{max-width:1040px;margin:0 auto;padding:clamp(58px,8vw,88px) 28px
       <div class="seal" aria-hidden="true">
         <svg viewBox="0 0 200 200">
           <defs><path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
-          <text><textPath href="#ring" startOffset="0">· Es una sorpresa · 9 de julio · 20:00 h ·&nbsp;</textPath></text>
+          <text><textPath href="#ring" startOffset="0">· Es una sorpresa · 9 de julio · 20:15 h ·&nbsp;</textPath></text>
         </svg>
         <span class="disc">60</span>
       </div>
@@ -249,12 +249,12 @@ footer .foot-in{max-width:1040px;margin:0 auto;padding:clamp(58px,8vw,88px) 28px
 
     <div class="sched reveal d1" style="margin-top:clamp(48px,7vw,72px)">
       <div class="sec-label">El horario</div>
-      <div class="srow"><span class="st">20:00</span><span class="sd">Llegamos todos y nos colocamos</span></div>
+      <div class="srow"><span class="st">20:15</span><span class="sd">Llegamos todos</span></div>
       <div class="srow hot"><span class="st">20:30</span><span class="sd">Llega Blanca — la sorpresa</span></div>
-      <div class="srow"><span class="st">22:30</span><span class="sd">Se acaba la fiesta</span></div>
+      <div class="srow"><span class="st">22:30</span><span class="sd">Se acaba la barra libre y la cena, aunque nos dejan seguir hasta el cierre por si alguien quiere un digestivo</span></div>
     </div>
 
-    <p class="statement reveal d2">Es una sorpresa.<br><span class="r">Ven a las 20:00 y ayúdanos a guardar el secreto.</span></p>
+    <p class="statement reveal d2">Es una sorpresa.<br><span class="r">Ven a las 20:15 y ayúdanos a guardar el secreto.</span></p>
   </div>
 </section>
 
@@ -279,6 +279,10 @@ footer .foot-in{max-width:1040px;margin:0 auto;padding:clamp(58px,8vw,88px) 28px
         <label class="filebtn" for="mf-files"><span style="font-size:1.3em;line-height:0">＋</span> Añadir fotos</label>
         <input id="mf-files" type="file" accept="image/*" multiple hidden/>
         <div class="thumbs" id="mf-thumbs"></div>
+      </div>
+      <div class="field">
+        <label for="mf-song">Tu canción favorita <span class="opt">(la sumamos a la playlist)</span></label>
+        <input id="mf-song" type="text" maxlength="160" placeholder="Título y artista"/>
       </div>
       <button type="submit" class="btn" id="mf-submit">Enviar <span class="arr">→</span></button>
       <p class="mstatus" id="mf-status" role="status" aria-live="polite"></p>
@@ -322,7 +326,7 @@ $('#maps-btn').href=CONFIG.mapsUrl;
 
 const ticker=(txt,n=8)=>Array.from({length:n}).map(()=>`<span class="mq-item">${txt}<span class="dot">●</span></span>`).join('');
 $('#mq-top').innerHTML=$('#mq-top2').innerHTML=ticker('Blanca cumple 60');
-$('#mq-mid').innerHTML=$('#mq-mid2').innerHTML=ticker('Casa Baldo &nbsp;·&nbsp; Zaragoza &nbsp;·&nbsp; 9 julio &nbsp;·&nbsp; 20:00');
+$('#mq-mid').innerHTML=$('#mq-mid2').innerHTML=ticker('Casa Baldo &nbsp;·&nbsp; Zaragoza &nbsp;·&nbsp; 9 julio &nbsp;·&nbsp; 20:15');
 $('#mq-bot').innerHTML=$('#mq-bot2').innerHTML=ticker('Es una sorpresa');
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.16});
@@ -401,8 +405,9 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const nombre  = document.getElementById('mf-name').value.trim();
   const mensaje = document.getElementById('mf-msg').value.trim();
-  if (!nombre)                        return say('Pon tu nombre, por favor.', 'err');
-  if (!mensaje && files.length === 0) return say('Escribe un mensaje o añade alguna foto.', 'err');
+  const cancion = document.getElementById('mf-song').value.trim();
+  if (!nombre)                                    return say('Pon tu nombre, por favor.', 'err');
+  if (!mensaje && files.length === 0 && !cancion) return say('Escribe un mensaje, añade una foto o sugiere una canción.', 'err');
   if (!READY)                           return say('Falta configurar Firebase (pega tu config en el código).', 'err');
 
   submit.disabled = true;
@@ -417,6 +422,10 @@ form.addEventListener('submit', async (e) => {
     if (mensaje && files.length === 0) {
       say('Guardando tu mensaje…');
       await addDoc(collection(db, 'mensajes'), { nombre, mensaje, creado: serverTimestamp() });
+    }
+    if (cancion) {
+      say('Guardando tu canción…');
+      await addDoc(collection(db, 'canciones'), { nombre, cancion, creado: serverTimestamp() });
     }
     form.reset(); files = []; thumbs.innerHTML = '';
     say('¡Gracias! Lo hemos recibido todo 🤍', 'ok');
